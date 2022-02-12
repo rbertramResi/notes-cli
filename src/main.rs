@@ -13,7 +13,7 @@ fn main() -> Result<(), utils::Error> {
     let command = &args[1];
 
     match command.as_str() {
-        "add" => add::add_entry(),
+        "add" => add::add_entry("Name", "This is the my file"),
         _ => Err(utils::throw_io_error(format!("Invalid command: {}", command).as_str()))
     } 
 }
