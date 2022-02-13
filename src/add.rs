@@ -3,19 +3,12 @@ use std::fs::File;
 use std::io;
 use std::io::Write;
 
-gflags::define! {
-    -t, --title: utils::FlagText
-}
 
 gflags::define! {
     -t, --text: utils::FlagText
 }
 
-pub fn add_entry() -> Result<(), utils::Error> {
-    gflags::parse();
-    let title = &TITLE.flag.value;
-    let text = &TEXT.flag.value;
-    println!("{:?}", title);
+pub fn add_entry(title: &str, text: &str) -> Result<(), utils::Error> {
     let file_name_with_path = format!("{}/{}", utils::get_base_path(), title);
     match File::create(&file_name_with_path) {
         Ok(mut f) => {

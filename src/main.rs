@@ -2,10 +2,30 @@ mod utils;
 mod add;
 mod list;
 mod delete;
+mod read;
 
 use std::env;
 
+gflags::define! {
+    --text: utils::FlagText
+}
+gflags::define! {
+    --title: utils::FlagText
+}
+
 fn main() -> Result<(), utils::Error> {
+    gflags::parse();
+
+    let file_name = match &TITLE.is_present() {
+        true => &TITLE.flag.value,
+        _ => "",
+    };
+    
+    let file_text = match &TEXT.is_present() {
+        true => &TEXT.flag.value,
+        _ => "",
+    };
+
     let args: Vec<String> = env::args().collect();
 
     if args.len() < 2 {
@@ -15,9 +35,10 @@ fn main() -> Result<(), utils::Error> {
     let command = &args[1];
 
     match command.as_str() {
-        "add" => add::add_entry(),
+        "add" => add::add_entry(file_name, file_text),
         "list" => list::list_dirs(),
-        "delete" => delete::delete_file(),
+        "delete" => delete::delete_file(file_name),
+        "read" => read::read_file(file_name),
         _ => Err(utils::throw_io_error(format!("Invalid command: {}", command).as_str()))
     } 
 }

@@ -15,6 +15,10 @@ pub fn get_base_path() -> String {
     }
 }
 
+pub fn get_file_location(file_name: &str) -> String {
+    format!("{}/{}", get_base_path(), file_name)
+}
+
 pub fn handle_missing_base() {
     println!("Base path does not exist. Adding path...");
     match fs::create_dir_all(get_base_path().as_str()) {
