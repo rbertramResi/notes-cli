@@ -2,27 +2,13 @@ use super::utils;
 use std::fs::File;
 use std::io;
 use std::io::Write;
-use gflags::custom::{Arg, Value};
 
 gflags::define! {
-    -t, --title: FlagText
+    -t, --title: utils::FlagText
 }
 
 gflags::define! {
-    -t, --text: FlagText
-}
-
-#[derive(Debug)]
-struct FlagText {
-    value: String
-}
-
-impl Value for FlagText {
-    fn parse(arg: Arg) -> gflags::custom::Result<Self> {
-        match arg {
-            s => Ok(FlagText { value: String::from(s.get_str())}),
-        }
-    }
+    -t, --text: utils::FlagText
 }
 
 pub fn add_entry() -> Result<(), utils::Error> {
