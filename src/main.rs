@@ -1,5 +1,6 @@
 mod utils;
 mod add;
+mod edit;
 mod list;
 mod delete;
 mod read;
@@ -37,6 +38,7 @@ fn main() -> Result<(), utils::Error> {
 
     match command.as_str() {
         "add" => add::add_entry(file_name, file_text),
+        "edit" => edit::edit_note(file_name),
         "list" => list::list_dirs(),
         "delete" => delete::delete_file(file_name),
         "read" => read::read_file(file_name),
