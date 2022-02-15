@@ -3,6 +3,7 @@ mod add;
 mod list;
 mod delete;
 mod read;
+mod help;
 
 use std::env;
 
@@ -39,6 +40,7 @@ fn main() -> Result<(), utils::Error> {
         "list" => list::list_dirs(),
         "delete" => delete::delete_file(file_name),
         "read" => read::read_file(file_name),
+        "help" => help::display_help(),
         _ => Err(utils::throw_io_error(format!("Invalid command: {}", command).as_str()))
     } 
 }
