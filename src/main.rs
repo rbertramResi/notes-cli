@@ -1,6 +1,5 @@
 mod utils;
-mod add;
-mod edit;
+mod add_edit;
 mod list;
 mod delete;
 mod read;
@@ -9,10 +8,7 @@ mod help;
 use std::env;
 
 gflags::define! {
-    --text: utils::FlagText
-}
-gflags::define! {
-    --title: utils::FlagText
+   -t, --title: utils::FlagText
 }
 
 fn main() -> Result<(), utils::Error> {
@@ -20,11 +16,6 @@ fn main() -> Result<(), utils::Error> {
 
     let file_name = match &TITLE.is_present() {
         true => &TITLE.flag.value,
-        _ => "",
-    };
-    
-    let file_text = match &TEXT.is_present() {
-        true => &TEXT.flag.value,
         _ => "",
     };
 
@@ -35,10 +26,10 @@ fn main() -> Result<(), utils::Error> {
     }
 
     let command = &args[1];
-
+    utils::handle_missing_base();
     match command.as_str() {
-        "add" => add::add_entry(file_name, file_text),
-        "edit" => edit::edit_note(file_name),
+        "add" => add_edit::add_edit_note(file_name),
+        "edit" => add_edit::add_edit_note(file_name),
         "list" => list::list_dirs(),
         "delete" => delete::delete_file(file_name),
         "read" => read::read_file(file_name),

@@ -1,6 +1,6 @@
 use super::utils;
 
-pub fn edit_note(file_name: &str) -> Result<(), utils::Error> {
+pub fn add_edit_note(file_name: &str) -> Result<(), utils::Error> {
     let file_path = utils::get_file_location(file_name); 
 
     std::process::Command::new("vim")

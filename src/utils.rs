@@ -20,10 +20,15 @@ pub fn get_file_location(file_name: &str) -> String {
 }
 
 pub fn handle_missing_base() {
-    println!("Base path does not exist. Adding path...");
-    match fs::create_dir_all(get_base_path().as_str()) {
-        Ok(_) => println!("path_created"),
-        Err(e) => panic!("{}", format!("Failed to create path: {}", e)),
+    match fs::read_dir(get_base_path().as_str()) {
+        Ok(_) => {},
+        Err(_) => {
+            println!("Base path does not exist. Adding path...");
+            match fs::create_dir_all(get_base_path().as_str()) {
+                Ok(_) => println!("path_created"),
+                Err(e) => panic!("{}", format!("Failed to create path: {}", e)),
+            }
+        }
     }
 }
 
